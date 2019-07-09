@@ -90,7 +90,7 @@ class Info {
     public name: string
     public age: number
     private infoString: string
-    constructor(name: string, age?: number, sex?: string) {
+    constructor(name: string, age: number, sex?: string) {
         this.name = name
         this.age = age
     }

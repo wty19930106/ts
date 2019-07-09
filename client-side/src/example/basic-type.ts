@@ -51,7 +51,6 @@ const consoleText = (text: string): void => {
 }
 let v: void
 v = undefined
-v = null
 // consoleText('abc')
 
 // null和undefined类型
