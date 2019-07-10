@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>reduce</title>
+</head>
+<body>
+
+ 
+</body>
+<script>
+  const arr = [
+    {
+      id: 1,
+      type: 'A',
+      total: 3
+    },
+    {
+      id: 2,
+      type: 'B',
+      total: 5
+    },
+    {
+      id: 3,
+      type: 'C',
+      total: 7
+    }
+  ]
+  let sum = arr.reduce((sum, {total}) => {
+    return sum + total
+  }, 0)
+  // console.log(sum);
+  // 15
+
+  let str = arr.reduce((str, {id, type}) => {
+    return str + `id:${id},type:${type} ` 
+  }, '')
+  // console.log(str);
+  // id:1,type:A id:2,type:B id:3,type:C 
+  
+  let obj = arr.reduce((res, {id, type, total}) => {
+    res[id] = {
+      type,
+      total
+    }
+    return res
+  }, {})
+  // console.log(obj);
+  // {
+  //   1:{
+  //       type:'A',
+  //       total: 3
+  //     },
+  //   2:{
+  //     type:'B',
+  //     total: 5
+  //     },
+  //   3:{
+  //     type:'C',
+  //     total: 7
+  //     }
+  // }
+
+  
+  let arr2 = arr.reduce((arr, {id, type, total}) => {
+    arr[id-1] = {
+      type,
+      total
+    }
+    return arr
+  }, [])
+  // console.log(arr2);
+  // [
+  //   {
+  //     type: "A",
+  //     total: 3
+  //   },
+  //   {
+  //     type: "B",
+  //     total: 5
+  //   },
+  //   {
+  //     type: "C",
+  //     total: 7
+  //   }
+  // ]
+  
+  let arr3 = arr.reduce((arr, {id,type}) => {
+    arr[id-1] = type
+    return arr
+  }, [])
+  // console.log(arr3);
+  // ['A', 'B', 'C']
+  
+  const fileLines = [
+    'Inspector Algar,Inspector Bardle,Mr. Barker,Inspector Barton',
+    'Inspector Baynes,Inspector Bradstreet,Inspector Sam Brown',
+    'Monsieur Dubugue,Birdy Edwards,Inspector Forbes,Inspector Forrester',
+    'Inspector Gregory,Inspector Tobias Gregson,Inspector Hill',
+    'Inspector Stanley Hopkins,Inspector Athelney Jones'
+  ]
+  const investigators = fileLines.reduce((acc, line) => {
+    return acc.concat(line.split(/,/g))
+  },[])
+  // console.log(investigators);
+  // [
+  //   "Inspector Algar",
+  //   "Inspector Bardle",
+  //   "Mr. Barker",
+  //   "Inspector Barton",
+  //   "Inspector Baynes",
+  //   "Inspector Bradstreet",
+  //   "Inspector Sam Brown",
+  //   "Monsieur Dubugue",
+  //   "Birdy Edwards",
+  //   "Inspector Forbes",
+  //   "Inspector Forrester",
+  //   "Inspector Gregory",
+  //   "Inspector Tobias Gregson",
+  //   "Inspector Hill",
+  //   "Inspector Stanley Hopkins",
+  //   "Inspector Athelney Jones"
+  // ]
+
+  
+  Array.prototype.flatMap = function(f) {
+    const reducer = (acc, item) => acc.concat(f(item))
+    return this.reduce(reducer, [])
+  }
+  const txtArray = ["今天天气不错", "", "早上好"]
+  const txtArray2 = txtArray.flatMap(s => s.split(''))
+  // console.log(txtArray2);
+  // // ["今", "天", "天", "气", "不", "错", "", "早", "上", "好"]
+  
+  const readings = [0.3, 1.2, 3.4, 0.2, 3.2, 5.5, 0.4]
+  // const maxReading = readings.reduce((x, y) => Math.max(x,y), Number.MIN_VALUE)
+  // const minReading = readings.reduce((x, y) => Math.max(x,y), Number.MAX_VALUE)
+  function minMaxReducer(acc, reading) {
+    return {
+      minReading: Math.min(acc.minReading, reading),
+      maxReading: Math.max(acc.maxReading, reading)
+    }
+  }
+  const initMinMax = {
+    minReading: Number.MAX_VALUE,
+    maxReading: Number.MIN_VALUE
+  }
+  const minMax = readings.reduce(minMaxReducer, initMinMax)
+  // console.log(minMax);
+  // {minReading: 0.2, maxReading: 5.5}
+  
+
+  const userList = [
+  {
+    id: 1,
+    username: 'john',
+    sex: 1,
+    email: 'john@163.com'
+  },
+  {
+    id: 2,
+    username: 'jerry',
+    sex: 1,
+    email: 'jerry@163.com'
+  },
+  {
+    id: 3,
+    username: 'nancy',
+    sex: 0,
+    email: ''
+  }
+]
+
+function notEmptyEmail(x) {
+  return !!x.email
+}
+function notEmptyEmailUsername(usernameAcc, person){
+  return (notEmptyEmail(person)) ? (usernameAcc ? `${usernameAcc},${person.username}` : `${person.username}`) : usernameAcc
+}
+const userWithEmailFormatStr = userList.reduce(notEmptyEmailUsername, '')
+// console.log(userWithEmailFormatStr)
+// 'john,jerry'
+
+// 按顺序运行异步函数
+function fetchMessages(username) {
+  return {
+    age:18
+  }
+    // return fetch(`https://example.com/api/messages/${username}`)
+    //     .then(response => response.json());
+}
+
+function getUsername(person) {
+    return person.username;
+}
+
+async function chainedFetchMessages(p, username) {
+  
+  
+    // In this function, p is a promise. We wait for it to finish,
+    // then run fetchMessages().
+    const obj  = await p;
+    const data = await fetchMessages(username);
+    // console.log(obj)
+    // {}
+    // {john:{...}}
+    // {john: {...}, jerry: {...}}
+    // {john: {...}, jerry: {...}, nancy: {...}}
+    return { ...obj, [username]: data};
+}
+
+const msgObj = userList
+    .map(getUsername) //['jone', 'jerry', 'nancy']
+    .reduce(chainedFetchMessages, Promise.resolve({}))
+    .then(console.log);
+// {glestrade: [ … ], mholmes: [ … ], iadler: [ … ]}
+// console.log(msgObj);
+
+</script>
+</html>
