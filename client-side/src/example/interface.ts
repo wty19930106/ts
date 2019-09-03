@@ -46,6 +46,7 @@ interface ArrInter {
 
 let arrI: ArrInter = [ 1 , 'a']
 
+// type AddFunc = (num1: number, num2: number) => number
 type AddFunc = (num1: number, num2: number) => number // 类型别名
 const add: AddFunc = (n1, n2) => n1 + n2
 // const add: AddFunc = (n1, n2) => `${n1} , ${n2}` // 错误
@@ -83,9 +84,9 @@ interface Counter {
     (): void,
     count: number
 }
-const getCounter = (): Counter => {
-    const c = () => {c.count++}
-    c.count = 0
-    return c
-}
-const couter: Counter = getCounter()
+// const getCounter = (): Counter => {
+//     const c = () => {c.count++}
+//     c.count = 0
+//     return c
+// }
+// const couter: Counter = getCounter()
