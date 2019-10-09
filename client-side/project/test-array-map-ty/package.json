@@ -1,0 +1,21 @@
+{
+  "name": "test-array-map-ty",
+  "version": "1.0.1",
+  "description": "array map function use ts",
+  "main": "./dist/test-array-map-ty.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "typescript",
+    "ty"
+  ],
+  "author": "tongyu.wang@cue.group",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^3.6.2"
+  },
+  "dependencies": {
+    "test-array-map-ty": "^1.0.0"
+  }
+}

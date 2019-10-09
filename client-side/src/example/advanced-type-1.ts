@@ -1,10 +1,10 @@
-import { type } from "os";
 import { EROFS } from "constants";
+import { type } from "os";
 
-//高级类型1
-//交叉类型
+// 高级类型1
+// 交叉类型
 // const mergeFunc = <T, U>(arg1: T, arg2: U): T & U => {
-//   let res = {} as T & U 
+//   let res = {} as T & U
 //   res = Object.assign(arg1, arg2)
 //   return res
 // }
@@ -19,9 +19,8 @@ import { EROFS } from "constants";
 // 类型保护
 const valueList = [123, 'abc']
 const getRandomValue = () => {
-  const number = Math.random() * 10
-  if (number < 5) {return valueList[0]}
-  else {return valueList[1]}
+  const num = Math.random() * 10
+  if (num < 5) {return valueList[0]} else {return valueList[1]}
 }
 const item = getRandomValue()
 
@@ -62,10 +61,10 @@ const item = getRandomValue()
 // if (item1 instanceof CreatedByClass1){
 //   console.log(item1.age);
 // } else {
-//   console.log(item1.name); 
+//   console.log(item1.name);
 // }
 
-//null/undefined
+// null/undefined
 // let values = '123'
 // // values = undefined
 // const sumFunc = (x: number, y?: number) => {
@@ -86,11 +85,11 @@ const item = getRandomValue()
 // }
 // console.log(getSplicedStr(1.234))
 
-//类型别名
+// 类型别名
 type TypeString = string
 let str: TypeString
 
-type PositionType<T> = {x: T, y: T}
+interface PositionType<T> {x: T, y: T}
 const position1: PositionType<number> = {
   x: 1,
   y: -1,
@@ -99,31 +98,31 @@ const position2: PositionType<string> = {
   x: 'left',
   y: 'right',
 }
-type Childs<T> = {
+interface Childs<T> {
   current: T,
   child?: Childs<T>,
 }
-let ccc: Childs<string> = {
+const ccc: Childs<string> = {
   current: 'first',
   child: {
     current: 'second',
     child : {
-      current: 'third'
-    }
-  }
+      current: 'third',
+    },
+  },
 }
 
-type Alias = {
+interface Alias {
   num: number
 }
 interface AliasInterface {
   num: number
 }
 let _alias: Alias = {
-  num: 123
+  num: 123,
 }
-let _interface: AliasInterface ={
-  num: 123
+const _interface: AliasInterface = {
+  num: 123,
 }
 _alias = _interface
 
@@ -142,14 +141,14 @@ interface InfoInterface {
 }
 const _info2: InfoInterface = {
   name: '123',
-  age: 18
+  age: 18,
 }
 
-/** 
+/**
  * 可辨识联合两要素
  * 1.具有普通的单例类型属性
  * 2.一个类型别名包好了那些类型的联合
- */ 
+ */
 interface Square {
   kind: 'square',
   size: number
@@ -171,7 +170,7 @@ function getArea(s: Shape): number {
   switch (s.kind) {
     case 'square': return s.size * s.size; break;
     case 'rectangle': return s.height * s.width; break;
-    case 'circle':return  Math.PI * s.radius ** 2; break;
+    case 'circle': return  Math.PI * s.radius ** 2; break;
     default: return assertNever(s)
 
   }

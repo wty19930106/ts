@@ -14,4 +14,6 @@
 // import './example/merging'
 // import './example/decorators'
 // import './example/mixin'
-import './example/update'
+// import './example/update'
+// import './example/declaration-files'
+import './example/23-project-declaration'
